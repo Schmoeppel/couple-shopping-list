@@ -1,0 +1,34 @@
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.welcome-message {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-message h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.welcome-message p {
+  color: #666;
+  font-size: 18px;
+  line-height: 1.6;
+}
