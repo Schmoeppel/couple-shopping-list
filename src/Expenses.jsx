@@ -136,7 +136,7 @@ function Expenses() {
           </div>
         ) : thomasBalance > 0 ? (
           <div className="balance-owed">
-            <strong>Thomas</strong> hat <strong className="balance-amount">€{(Math.abs(thomasBalance) * 2).toFixed(2)}</strong> mehr gezahlt
+            <strong>Thomas</strong> hat <strong className="balance-amount">€{(Math.abs(thomasBalance) * 2).toFixed(2)}</strong> mehr gezahlt. Krasser Typ!
           </div>
         ) : (
           <div className="balance-owed">
@@ -205,7 +205,6 @@ function Expenses() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What was this for?"
               className="input"
-              required
             />
           </div>
 
