@@ -19,6 +19,7 @@ export default defineConfig({
         scope: '/couple-shopping-list/',
         start_url: '/couple-shopping-list/',
         orientation: 'portrait',
+        categories: ['shopping', 'lifestyle', 'productivity'],
         icons: [
           {
             src: '/couple-shopping-list/icon-192x192.png',
@@ -48,6 +49,17 @@ export default defineConfig({
               },
               cacheableResponse: {
                 statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/.*\.googleapis\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'firebase-api-cache',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 // 24 hours
               }
             }
           }
