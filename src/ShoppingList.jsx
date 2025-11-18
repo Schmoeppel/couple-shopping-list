@@ -2,14 +2,24 @@ import { useState, useEffect } from 'react';
 import { ref, push, onValue, update, remove } from 'firebase/database';
 import { database } from './firebase';
 
+const LIST_KEYS = [
+  { key: 'shopping', label: 'Shopping' },
+  { key: 'besorgen', label: 'Besorgen' },
+  { key: 'todo', label: 'ToDo' },
+  { key: 'juggling', label: 'Juggling' },
+  { key: 'random', label: 'Random' },
+];
+
 function ShoppingList() {
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [loading, setLoading] = useState(true);
+  const [listKey, setListKey] = useState('shopping');
 
   // Load items from Firebase
   useEffect(() => {
-    const itemsRef = ref(database, 'shoppingList');
+    setLoading(true);
+    const itemsRef = ref(database, `shoppingList/${listKey}`);
     
     const unsubscribe = onValue(itemsRef, (snapshot) => {
       const data = snapshot.val();
@@ -28,14 +38,14 @@ function ShoppingList() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [listKey]);
 
   // Add new item
   const addItem = (e) => {
     e.preventDefault();
     if (newItem.trim() === '') return;
 
-    const itemsRef = ref(database, 'shoppingList');
+    const itemsRef = ref(database, `shoppingList/${listKey}`);
     push(itemsRef, {
       name: newItem.trim(),
       completed: false,
@@ -47,13 +57,13 @@ function ShoppingList() {
 
   // Toggle item completion
   const toggleItem = (id, completed) => {
-    const itemRef = ref(database, `shoppingList/${id}`);
+    const itemRef = ref(database, `shoppingList/${listKey}/${id}`);
     update(itemRef, { completed: !completed });
   };
 
   // Delete item
   const deleteItem = (id) => {
-    const itemRef = ref(database, `shoppingList/${id}`);
+    const itemRef = ref(database, `shoppingList/${listKey}/${id}`);
     remove(itemRef);
   };
 
@@ -78,6 +88,27 @@ function ShoppingList() {
       <header>
         <h1>🛒 Our Shopping List</h1>
         <p className="subtitle">brauchen wir noch Bier?</p>
+
+        <div className="list-switcher" style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
+          {LIST_KEYS.map(l => (
+            <button
+              key={l.key}
+              className={`list-switch-btn ${listKey === l.key ? 'active' : ''}`}
+              onClick={() => setListKey(l.key)}
+              style={{
+                padding: '0.35rem 0.6rem',
+                borderRadius: 8,
+                border: '1px solid #e0e0e0',
+                background: listKey === l.key ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white',
+                color: listKey === l.key ? 'white' : '#555',
+                fontSize: '0.85rem',
+                cursor: 'pointer'
+              }}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
       </header>
 
       <form onSubmit={addItem} className="add-item-form">

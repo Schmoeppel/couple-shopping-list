@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ref, push, onValue, update, remove, increment } from 'firebase/database';
 import { database } from './firebase';
 import './Chores.css';
@@ -7,12 +8,15 @@ const PRESET_CHORES = [
   { name: 'Müll runter', points: 5 },
   { name: 'Kochen', points: 5 },
   { name: 'Bad putzen', points: 5 },
-  { name: 'Fenster putzen', points: 5 },
   { name: 'Einkaufen', points: 5 },
   { name: 'Saugen', points: 5 },
   { name: 'Wäsche aufhängen', points: 5 },
   { name: 'Wäsche abhängen', points: 5 },
   { name: 'Spülmaschine ausräumen', points: 5 },
+  { name: 'Aufräumen', points: 5 },
+  { name: 'Pfand', points: 5 },
+  { name: 'Altpapier', points: 5 },
+  { name: 'Altglas', points: 5 },
   { name: 'Gießen', points: 5, recurring: true, recurDays: 6 },
 ];
 
@@ -305,50 +309,53 @@ function Chores() {
         )}
       </div>
 
-      {/* Modal for completing chore */}
-      {selectedChore && (
-        <div className="modal-overlay" onClick={() => setSelectedChore(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button 
-              className="modal-close"
-              onClick={() => setSelectedChore(null)}
-            >
-              ✕
-            </button>
-            
-            <h3 className="modal-title">{selectedChore.name}</h3>
-            <p className="modal-points">{selectedChore.points} points</p>
-            
-            <div className="modal-actions">
-              <p className="modal-question">Who completed this?</p>
-              <button
-                onClick={() => completeChore(selectedChore, 'Thomas')}
-                className="btn-complete btn-thomas"
+      {/* Modal for completing chore (portal to body to avoid tab transform clipping) */}
+      {selectedChore && createPortal(
+        (
+          <div className="modal-overlay" onClick={() => setSelectedChore(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button 
+                className="modal-close"
+                onClick={() => setSelectedChore(null)}
               >
-                Thomas
+                ✕
               </button>
+              
+              <h3 className="modal-title">{selectedChore.name}</h3>
+              <p className="modal-points">{selectedChore.points} points</p>
+              
+              <div className="modal-actions">
+                <p className="modal-question">Who completed this?</p>
+                <button
+                  onClick={() => completeChore(selectedChore, 'Thomas')}
+                  className="btn-complete btn-thomas"
+                >
+                  Thomas
+                </button>
+                <button
+                  onClick={() => completeChore(selectedChore, 'Chantale')}
+                  className="btn-complete btn-chantale"
+                >
+                  Chantale
+                </button>
+                <button
+                  onClick={() => completeChore(selectedChore, 'Both')}
+                  className="btn-complete btn-both"
+                >
+                  Both
+                </button>
+              </div>
+
               <button
-                onClick={() => completeChore(selectedChore, 'Chantale')}
-                className="btn-complete btn-chantale"
+                onClick={() => deleteChore(selectedChore.id)}
+                className="btn-delete-modal"
               >
-                Chantale
-              </button>
-              <button
-                onClick={() => completeChore(selectedChore, 'Both')}
-                className="btn-complete btn-both"
-              >
-                Both
+                Delete Chore
               </button>
             </div>
-
-            <button
-              onClick={() => deleteChore(selectedChore.id)}
-              className="btn-delete-modal"
-            >
-              Delete Chore
-            </button>
           </div>
-        </div>
+        ),
+        document.body
       )}
     </div>
   );

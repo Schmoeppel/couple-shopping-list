@@ -159,6 +159,16 @@
   color: #666;
 }
 
+/* Cumulative chart */
+.cumulative-chart {
+  width: 100%;
+}
+
+.chart-legend span {
+  font-size: 0.9rem;
+  color: #555;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .total-scores {

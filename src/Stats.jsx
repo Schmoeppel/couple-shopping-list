@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { database } from './firebase';
 import './Stats.css';
@@ -7,12 +7,15 @@ const PRESET_CHORES = [
   'Müll runter',
   'Kochen',
   'Bad putzen',
-  'Fenster putzen',
   'Einkaufen',
   'Saugen',
   'Wäsche aufhängen',
   'Wäsche abhängen',
   'Spülmaschine ausräumen',
+  'Aufräumen',
+  'Pfand',
+  'Altpapier',
+  'Altglas',
   'Gießen',
 ];
 
@@ -20,6 +23,8 @@ function Stats() {
   const [counters, setCounters] = useState({});
   const [scores, setScores] = useState({ Thomas: 0, Chantale: 0 });
   const [loading, setLoading] = useState(true);
+  const [historyItems, setHistoryItems] = useState([]);
+  const [range, setRange] = useState('all'); // '30','90','365','all'
 
   // Load counters
   useEffect(() => {
@@ -47,6 +52,71 @@ function Stats() {
 
     return () => unsubscribe();
   }, []);
+
+  // Load history once
+  useEffect(() => {
+    const historyRef = ref(database, 'chores/history');
+    const unsubscribe = onValue(historyRef, (snapshot) => {
+      const data = snapshot.val() || {};
+      const arr = Object.values(data)
+        .filter(x => x && x.timestamp)
+        .sort((a,b) => a.timestamp - b.timestamp);
+      setHistoryItems(arr);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Compute cumulative arrays for selected range
+  const cumulative = useMemo(() => {
+    if (!historyItems.length) return { days: [], thomas: [], chantale: [] };
+
+    // determine date range
+    const firstTs = historyItems[0].timestamp;
+    const lastTs = historyItems[historyItems.length - 1].timestamp;
+    const startDate = new Date(range === 'all' ? firstTs : Date.now() - (parseInt(range, 10) - 1) * 86400000);
+    const endDate = new Date(Math.max(lastTs, Date.now()));
+    startDate.setHours(0,0,0,0);
+    endDate.setHours(0,0,0,0);
+
+    // map daily counts
+    const byDayThomas = new Map();
+    const byDayChantale = new Map();
+    for (const item of historyItems) {
+      const d = new Date(item.timestamp);
+      if (d < startDate || d > endDate) continue;
+      const y = d.getFullYear();
+      const m = (d.getMonth() + 1).toString().padStart(2, '0');
+      const day = d.getDate().toString().padStart(2, '0');
+      const key = `${y}-${m}-${day}`;
+      if (item.completedBy === 'Thomas') byDayThomas.set(key, (byDayThomas.get(key) || 0) + 1);
+      else if (item.completedBy === 'Chantale') byDayChantale.set(key, (byDayChantale.get(key) || 0) + 1);
+      else if (item.completedBy === 'Both') {
+        byDayThomas.set(key, (byDayThomas.get(key) || 0) + 1);
+        byDayChantale.set(key, (byDayChantale.get(key) || 0) + 1);
+      }
+    }
+
+    // build day keys
+    const days = [];
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      const y = d.getFullYear();
+      const m = (d.getMonth() + 1).toString().padStart(2, '0');
+      const day = d.getDate().toString().padStart(2, '0');
+      days.push(`${y}-${m}-${day}`);
+    }
+
+    let tSum = 0, cSum = 0;
+    const thomas = []; const chantale = [];
+    days.forEach(k => {
+      tSum += byDayThomas.get(k) || 0;
+      cSum += byDayChantale.get(k) || 0;
+      thomas.push(tSum);
+      chantale.push(cSum);
+    });
+
+    return { days, thomas, chantale };
+  }, [historyItems, range]);
 
   // Calculate level and progress from XP
   const calculateLevel = (xp) => {
@@ -109,7 +179,18 @@ function Stats() {
 
       {/* XP Graphs per Chore */}
       <div className="xp-section">
-        <h3 className="section-title">Chore Levels</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 className="section-title" style={{ margin: 0 }}>Chore Levels</h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <label htmlFor="rangeSel" style={{ fontSize: '0.9rem', color: '#555' }}>Range:</label>
+            <select id="rangeSel" value={range} onChange={e => setRange(e.target.value)} className="chore-select" style={{ margin: 0, padding: '0.4rem 0.6rem', maxWidth: 140 }}>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="365">Last 365 days</option>
+              <option value="all">All time</option>
+            </select>
+          </div>
+        </div>
         
         {PRESET_CHORES.map(chore => {
           const thomasXP = getXP('Thomas', chore);
@@ -211,9 +292,62 @@ function Stats() {
             </div>
           </div>
         )}
+
+        {/* Cumulative graph at bottom */}
+        <div className="chore-stat" style={{ marginTop: '1rem' }}>
+          <h4 className="chore-stat-title">Chores Over Time (30 days)</h4>
+          {cumulative.days.length > 1 ? (
+            <CumulativeChart days={cumulative.days} thomas={cumulative.thomas} chantale={cumulative.chantale} />
+          ) : (
+            <div className="empty-state">No history yet</div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
 export default Stats;
+
+// Simple inline SVG line chart component
+function CumulativeChart({ days, thomas, chantale }) {
+  const width = 600; // virtual viewBox width
+  const height = 160; // virtual viewBox height
+  const pad = 16;
+
+  const n = days.length;
+  const maxY = Math.max(1, ...thomas, ...chantale);
+  const xFor = (i) => pad + (i * (width - 2 * pad)) / (n - 1);
+  const yFor = (v) => pad + (height - 2 * pad) * (1 - v / maxY);
+
+  const buildPath = (arr) =>
+    arr.map((v, i) => `${i === 0 ? 'M' : 'L'} ${xFor(i).toFixed(2)} ${yFor(v).toFixed(2)}`).join(' ');
+
+  const tPath = buildPath(thomas);
+  const cPath = buildPath(chantale);
+
+  return (
+    <div className="cumulative-chart">
+      <svg viewBox={`0 0 ${width} ${height}`} width="100%" height="160">
+        {/* background grid (optional minimal) */}
+        <line x1={pad} y1={height - pad} x2={width - pad} y2={height - pad} stroke="#e0e0e0" strokeWidth="1" />
+        <line x1={pad} y1={pad} x2={pad} y2={height - pad} stroke="#e0e0e0" strokeWidth="1" />
+
+        {/* Chantale (pink) */}
+        <path d={cPath} fill="none" stroke="#f5576c" strokeWidth="3" strokeLinecap="round" />
+        {/* Thomas (blue/purple) */}
+        <path d={tPath} fill="none" stroke="#667eea" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+      <div className="chart-legend" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '0.5rem' }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ width: 18, height: 3, background: '#667eea', display: 'inline-block', borderRadius: 2 }} />
+          Thomas
+        </span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ width: 18, height: 3, background: '#f5576c', display: 'inline-block', borderRadius: 2 }} />
+          Chantale
+        </span>
+      </div>
+    </div>
+  );
+}
