@@ -1,0 +1,36 @@
+.calendar-container { width:100%; }
+.calendar-header { text-align:center; margin-bottom:0.75rem; }
+.calendar-header h2 { font-size:2rem; margin:0; background:linear-gradient(135deg,#667eea 0%, #764ba2 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.month-nav { margin-top:0.5rem; display:flex; gap:0.5rem; align-items:center; justify-content:center; flex-wrap:wrap; }
+.nav-btn { padding:0.35rem 0.6rem; border-radius:8px; border:1px solid #e0e0e0; background:white; color:#555; cursor:pointer; font-size:0.9rem; }
+.nav-btn.today { background:linear-gradient(135deg,#667eea 0%, #764ba2 100%); color:white; border:none; }
+.month-title { font-weight:700; color:#333; min-width:160px; text-align:center; }
+
+.month-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin-top:0.75rem; grid-auto-rows: 120px; }
+.weekday { text-align:center; font-weight:700; color:#666; font-size:0.85rem; padding:4px 0; }
+.day-cell { background:#f8f9fa; border:1px solid #eee; border-radius:10px; padding:6px; height:100%; position:relative; cursor:pointer; display:flex; flex-direction:column; gap:4px; overflow:visible; }
+.day-cell.other-month { opacity:0.5; }
+.day-cell.today { outline:2px solid #667eea; }
+.day-number { position:relative; font-weight:700; color:#333; font-size:0.9rem; }
+.day-events { display:flex; flex-direction:column; gap:4px; overflow:hidden; }
+.event-chip { display:flex; align-items:center; background:white; border:1px solid #e0e0e0; border-radius:8px; padding:2px 6px; font-size:0.5rem; line-height:1.1; box-shadow:0 1px 3px rgba(0,0,0,0.05); min-height:18px; }
+.chip-thomas { border-left:4px solid #667eea; }
+.chip-chantale { border-left:4px solid #f5576c; }
+.chip-both { border-left:4px solid #00c2fe; }
+.chip-title { color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+
+/* Visual spanning for multi-day events */
+.event-chip.chip-span { margin-left:-6px; margin-right:-6px; border-radius:0; }
+.event-chip.chip-span.chip-start { margin-left:0; border-top-left-radius:8px; border-bottom-left-radius:8px; }
+.event-chip.chip-span.chip-end { margin-right:0; border-top-right-radius:8px; border-bottom-right-radius:8px; }
+
+/* Modal reuse of chores styles */
+.modal-overlay { position: fixed; inset:0; background: rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:1000; }
+.modal-content { background: white; border-radius: 20px; padding: 1.5rem; max-width: 420px; width: 92%; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; }
+.modal-close { position: absolute; top: 0.8rem; right: 0.8rem; background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; padding: 0.5rem; line-height: 1; }
+.modal-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.75rem; color: #333; text-align: center; }
+.calendar-form { background:#f8f9fa; padding:1rem; border-radius:12px; display:flex; flex-direction:column; gap:0.5rem; }
+.calendar-row { display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; }
+.calendar-row label { font-size:0.8rem; font-weight:600; color:#555; }
+.select { cursor:pointer; }

@@ -86,7 +86,12 @@ function ShoppingList() {
   return (
     <>
       <header>
-        <h1>🛒 Our Shopping List</h1>
+        <h1 style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>🛒 Our Shopping List</h1>
         <p className="subtitle">brauchen wir noch Bier?</p>
 
         <div className="list-switcher" style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>

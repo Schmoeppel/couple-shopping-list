@@ -77,7 +77,7 @@ function Stats() {
     const startDate = new Date(range === 'all' ? firstTs : Date.now() - (parseInt(range, 10) - 1) * 86400000);
     const endDate = new Date(Math.max(lastTs, Date.now()));
     startDate.setHours(0,0,0,0);
-    endDate.setHours(0,0,0,0);
+    endDate.setHours(23,59,59,999);
 
     // map daily counts
     const byDayThomas = new Map();
@@ -295,7 +295,7 @@ function Stats() {
 
         {/* Cumulative graph at bottom */}
         <div className="chore-stat" style={{ marginTop: '1rem' }}>
-          <h4 className="chore-stat-title">Chores Over Time (30 days)</h4>
+          <h4 className="chore-stat-title">Chores Over Time {range === 'all' ? '(all time)' : `(last ${range} days)`}</h4>
           {cumulative.days.length > 1 ? (
             <CumulativeChart days={cumulative.days} thomas={cumulative.thomas} chantale={cumulative.chantale} />
           ) : (
