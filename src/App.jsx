@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ShoppingList from './ShoppingList';
 import Chores from './Chores';
 import Expenses from './Expenses';
@@ -14,6 +14,8 @@ function App() {
   const [dragOffset, setDragOffset] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState(null); // 'horizontal' or 'vertical'
   const containerRef = useRef(null);
+  const navRef = useRef(null);
+  const tabRefs = useRef([]);
 
   const tabs = [
     { id: 'shopping', label: '🛒 Shopping', component: ShoppingList },
@@ -24,6 +26,60 @@ function App() {
   ];
 
   const currentTabIndex = tabs.findIndex(tab => tab.id === activeTab);
+  // Helper: center a tab in the nav scroll area
+  const centerTabInNav = (index, smooth = true) => {
+    const nav = navRef.current;
+    const btn = tabRefs.current[index];
+    if (!nav || !btn) return;
+    const navWidth = nav.clientWidth;
+    const btnCenter = btn.offsetLeft + btn.offsetWidth / 2;
+    let target = Math.max(0, btnCenter - navWidth / 2);
+    const maxScroll = nav.scrollWidth - navWidth;
+    if (!Number.isFinite(target)) return;
+    target = Math.min(Math.max(0, target), Math.max(0, maxScroll));
+    if (smooth && nav.scrollTo) nav.scrollTo({ left: target, behavior: 'smooth' });
+    else nav.scrollLeft = target;
+  };
+
+  // Keep the active tab centered when it changes
+  useEffect(() => {
+    centerTabInNav(currentTabIndex, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  // Re-center on resize/orientation changes
+  useEffect(() => {
+    const onResize = () => centerTabInNav(currentTabIndex, false);
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+    };
+  }, [currentTabIndex]);
+
+  // During swipe, interpolate nav scroll between current and neighbor
+  const updateNavScrollDuringDrag = (diffX) => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const width = containerRef.current?.clientWidth || window.innerWidth || 1;
+    const progress = Math.max(-1, Math.min(1, -diffX / width)); // left swipe => positive progress
+    const dir = progress > 0 ? 1 : -1;
+    const nextIndex = currentTabIndex + dir;
+    const fromBtn = tabRefs.current[currentTabIndex];
+    const toBtn = tabRefs.current[nextIndex];
+    if (!fromBtn || !toBtn) return; // at edges, skip interpolation
+
+    const navWidth = nav.clientWidth;
+    const fromCenter = fromBtn.offsetLeft + fromBtn.offsetWidth / 2;
+    const toCenter = toBtn.offsetLeft + toBtn.offsetWidth / 2;
+    const t = Math.min(1, Math.abs(progress));
+    let targetCenter = fromCenter + (toCenter - fromCenter) * t;
+    let target = Math.max(0, targetCenter - navWidth / 2);
+    const maxScroll = nav.scrollWidth - navWidth;
+    target = Math.min(Math.max(0, target), Math.max(0, maxScroll));
+    nav.scrollLeft = target;
+  };
 
   // Minimum swipe distance (in px) to trigger a tab change
   const minSwipeDistance = 80;
@@ -86,6 +142,8 @@ function App() {
         // Apply resistance when at boundaries
         setDragOffset(diffX * 0.3);
       }
+      // Link the nav scroll with swipe movement
+      updateNavScrollDuringDrag(diffX);
       
       setTouchEnd(currentTouch);
     }
@@ -126,12 +184,13 @@ function App() {
         ref={containerRef}
       >
         {/* Tab Navigation */}
-        <nav className="tab-nav">
-          {tabs.map(tab => (
+        <nav className="tab-nav" ref={navRef}>
+          {tabs.map((tab, i) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+              ref={(el) => (tabRefs.current[i] = el)}
             >
               {tab.label}
             </button>
