@@ -238,7 +238,7 @@ function Chores() {
   return (
     <div className="chores-container">
       <header className="chores-header">
-        <h2>🧹 Chores</h2>
+        <h2>Chores</h2>
       </header>
 
       <button 

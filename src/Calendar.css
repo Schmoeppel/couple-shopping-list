@@ -16,7 +16,7 @@
 .day-events { display:flex; flex-direction:column; gap:4px; overflow:hidden; }
 .event-chip { display:flex; align-items:center; border:1x solid #e0e0e0; border-radius:8px; padding:2px 4px; font-size:0.6rem; line-height:1.1; box-shadow:0 1px 3px rgba(0,0,0,0.05); min-height:18px; max-width:100%; }
 .chip-thomas { border-left:4px solid #667eea; background:#909cf7; color:#1f1f28; }
-.chip-chantale { border-left:4px solid #f5576c; background:#f791a7; color:#1f1f28; }
+.chip-chantale { border-left:4px solid #f5h576c; background:#f791a7; color:#1f1f28; }
 .chip-both { border-left:4px solid #00c2fe; background:#98dff9; color:#1f1f28; }
 .chip-title { color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
 

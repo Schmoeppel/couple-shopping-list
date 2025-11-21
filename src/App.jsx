@@ -19,7 +19,7 @@ function App() {
   const tabRefs = useRef([]);
 
   const tabs = [
-    { id: 'shopping', label: '🛒 Shopping', component: ShoppingList },
+    { id: 'shopping', label: '🛒 Lists', component: ShoppingList },
     { id: 'chores', label: '🧹 Chores', component: Chores },
     { id: 'expenses', label: '💰 Expenses', component: Expenses },
     { id: 'stats', label: '📊 Stats', component: Stats },

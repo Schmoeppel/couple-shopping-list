@@ -140,7 +140,7 @@ function Meals() {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
-        }}>🍽️ Meal Wishes</h2>
+        }}>Meal Wishes</h2>
         <p className="subtitle">Worauf habt ihr Hunger?</p>
       </header>
 

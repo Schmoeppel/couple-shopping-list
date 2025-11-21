@@ -3,10 +3,10 @@ import { ref, push, onValue, update, remove } from 'firebase/database';
 import { database } from './firebase';
 
 const LIST_KEYS = [
-  { key: 'shopping', label: 'Shopping', subtitle: 'Brauchen wir noch Bier?' },
-  { key: 'besorgen', label: 'Besorgen', subtitle: 'vllt so ein richtig schönes Holzbrett?' },
-  { key: 'todo', label: 'ToDo', subtitle: 'Yay wir schaffen das!' },
-  { key: 'juggling', label: 'Juggling', subtitle: 'Was sollen wir üben?' },
+  { key: 'shopping', label: 'Shopping', subtitle: 'Brauchen wir noch Bier?', buttonLabel: 'Bitte' },
+  { key: 'besorgen', label: 'Besorgen', subtitle: 'vllt so ein richtig schönes Holzbrett?', buttonLabel: 'erstmal auf die Liste' },
+  { key: 'todo', label: 'ToDo', subtitle: 'Yay wir schaffen das!', buttonLabel: 'Hoffentlich mach Chantale das' },
+  { key: 'juggling', label: 'Juggling', subtitle: 'Was sollen wir üben?', buttonLabel: 'Lets Go!' },
 ];
 
 function ShoppingList() {
@@ -90,7 +90,7 @@ function ShoppingList() {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
-        }}>🛒 Our Shopping List</h1>
+        }}>Lists</h1>
         <p className="subtitle">{LIST_KEYS.find(l => l.key === listKey)?.subtitle}</p>
 
         <div className="list-switcher" style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
@@ -124,7 +124,7 @@ function ShoppingList() {
           className="input"
         />
         <button type="submit" className="btn btn-primary">
-          Bitte
+          {LIST_KEYS.find(l => l.key === listKey)?.buttonLabel}
         </button>
       </form>
 

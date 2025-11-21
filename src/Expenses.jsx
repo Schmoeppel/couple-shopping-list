@@ -124,7 +124,7 @@ function Expenses() {
   return (
     <div className="expenses-container">
       <header className="expenses-header">
-        <h2>💰 Expenses</h2>
+        <h2>Expenses</h2>
       </header>
 
       {/* Balance Summary */}

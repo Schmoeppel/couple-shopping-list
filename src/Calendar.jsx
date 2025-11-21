@@ -164,7 +164,7 @@ function Calendar() {
   return (
     <div className="calendar-container">
       <header className="calendar-header">
-        <h2>📅 Calendar</h2>
+        <h2>Calendar</h2>
         <div className="month-nav">
           <button className="nav-btn" onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}>‹ Prev</button>
           <div className="month-title">{monthTitle(currentMonth)}</div>

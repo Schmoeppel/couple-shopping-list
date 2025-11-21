@@ -160,7 +160,7 @@ function Stats() {
   return (
     <div className="stats-container">
       <header className="stats-header">
-        <h2>📊 Stats</h2>
+        <h2>Stats</h2>
       </header>
 
       {/* Total Points */}
