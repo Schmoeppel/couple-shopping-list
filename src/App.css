@@ -22,7 +22,7 @@
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--color-border-light);
   padding-bottom: 0.5rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -41,16 +41,16 @@
   cursor: pointer;
   transition: all 0.2s;
   border-radius: 10px 10px 0 0;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .tab-button:hover {
-  background: #f8f9fa;
-  color: #333;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
 }
 
 .tab-button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   color: white;
   box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
 }
@@ -99,12 +99,12 @@
 }
 
 .tab-content::-webkit-scrollbar-thumb {
-  background: #667eea;
+  background: var(--color-primary-light);
   border-radius: 10px;
 }
 
 .tab-content::-webkit-scrollbar-thumb:hover {
-  background: #764ba2;
+  background: var(--color-primary-main);
 }
 
 header {
@@ -115,14 +115,14 @@ header {
 h1 {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .subtitle {
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 1rem;
 }
 
@@ -143,7 +143,7 @@ h1 {
 .input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-light);
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.2s;
@@ -151,7 +151,7 @@ h1 {
 
 .input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary-light);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -166,7 +166,7 @@ h1 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   color: white;
 }
 
@@ -185,14 +185,14 @@ h1 {
   justify-content: center;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
 }
 
 .btn-link {
   background: none;
   border: none;
-  color: #667eea;
+  color: var(--color-primary-light);
   cursor: pointer;
   font-size: 0.9rem;
   text-decoration: underline;
@@ -200,7 +200,7 @@ h1 {
 }
 
 .btn-link:hover {
-  color: #764ba2;
+  color: var(--color-primary-main);
 }
 
 /* Items List */
@@ -215,13 +215,13 @@ h1 {
   justify-content: space-between;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  background: #f8f9fa;
+  background: var(--color-bg-secondary);
   border-radius: 10px;
   transition: all 0.2s;
 }
 
 .item:hover {
-  background: #f0f1f3;
+  background: var(--color-bg-hover);
   transform: translateX(5px);
 }
 
@@ -240,7 +240,7 @@ h1 {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #667eea;
+  accent-color: var(--color-primary-light);
 }
 
 .item-name {
@@ -250,13 +250,13 @@ h1 {
 
 .item.completed .item-name {
   text-decoration: line-through;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .btn-delete {
   background: none;
   border: none;
-  color: #ff6b6b;
+  color: var(--color-status-error);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
@@ -274,7 +274,7 @@ h1 {
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .empty-state p:first-child {
@@ -290,8 +290,8 @@ h1 {
 .footer {
   text-align: center;
   padding-top: 1.5rem;
-  border-top: 1px solid #e0e0e0;
-  color: #999;
+  border-top: 1px solid var(--color-border-light);
+  color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 

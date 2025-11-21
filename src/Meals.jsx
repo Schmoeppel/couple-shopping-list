@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ref, push, onValue, update, remove } from 'firebase/database';
+import colors from './colors';
   // Delete a meal wish
   const deleteWish = (id) => {
     const wishRef = ref(database, `meals/wishes/${id}`);
@@ -136,7 +137,7 @@ function Meals() {
       <header style={{ marginBottom: '1.25rem', textAlign: 'center' }}>
         <h2 style={{
           fontSize: '1.75rem',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: colors.primary.gradient,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
@@ -217,7 +218,7 @@ function Meals() {
                     }}
                   >{wish.name}</button>
                   {wish.recipeUrl && (
-                    <a href={wish.recipeUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#667eea', textDecoration: 'none', marginLeft: '0.75rem' }}>Rezept</a>
+                    <a href={wish.recipeUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: colors.accent.link, textDecoration: 'none', marginLeft: '0.75rem' }}>Rezept</a>
                   )}
                   <button
                     onClick={() => deleteWish(wish.id)}
@@ -229,7 +230,7 @@ function Meals() {
                 {isOpen && (
                   <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {wish.recipeUrl ? (
-                      <div style={{ fontSize: '0.85rem' }}>Link: <a href={wish.recipeUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#667eea' }}>{wish.recipeUrl}</a></div>
+                      <div style={{ fontSize: '0.85rem' }}>Link: <a href={wish.recipeUrl} target="_blank" rel="noopener noreferrer" style={{ color: colors.accent.link }}>{wish.recipeUrl}</a></div>
                     ) : (
                       <div style={{ fontSize: '0.85rem', color: '#999' }}>Kein Rezept-Link vorhanden.</div>
                     )}
@@ -258,7 +259,7 @@ function Meals() {
       </ul>
 
       <div style={{ marginTop: '2.5rem' }}>
-        <h3 style={{ fontSize: '1.15rem', marginBottom: '0.75rem', color: '#667eea' }}>Previous Meals</h3>
+        <h3 style={{ fontSize: '1.15rem', marginBottom: '0.75rem', color: colors.primary.main }}>Previous Meals</h3>
         <ul className="items-list">
           {catalog.length === 0 ? (
             <li className="empty-state">
@@ -270,7 +271,7 @@ function Meals() {
                 <span style={{ fontWeight: 600 }}>{meal.name}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   {meal.recipeUrl && (
-                    <a href={meal.recipeUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#667eea', textDecoration: 'none' }}>Rezept</a>
+                    <a href={meal.recipeUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: colors.accent.link, textDecoration: 'none' }}>Rezept</a>
                   )}
                   <button
                     onClick={() => deleteCatalogMeal(meal.id)}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ref, push, onValue, update, remove } from 'firebase/database';
 import { database } from './firebase';
+import colors from './colors';
 
 const LIST_KEYS = [
   { key: 'shopping', label: 'Shopping', subtitle: 'Brauchen wir noch Bier?', buttonLabel: 'Bitte' },
@@ -86,7 +87,7 @@ function ShoppingList() {
     <>
       <header>
         <h1 style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: colors.primary.gradient,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
@@ -102,9 +103,9 @@ function ShoppingList() {
               style={{
                 padding: '0.35rem 0.6rem',
                 borderRadius: 8,
-                border: '1px solid #e0e0e0',
-                background: listKey === l.key ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white',
-                color: listKey === l.key ? 'white' : '#555',
+                border: `1px solid ${colors.border.light}`,
+                background: listKey === l.key ? colors.primary.gradient : 'white',
+                color: listKey === l.key ? 'white' : colors.text.secondary,
                 fontSize: '0.85rem',
                 cursor: 'pointer'
               }}

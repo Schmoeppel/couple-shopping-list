@@ -10,7 +10,7 @@
 .stats-header h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -35,11 +35,11 @@
 }
 
 .thomas-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-thomas-gradient);
 }
 
 .chantale-card {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--color-chantale-gradient);
 }
 
 .score-name {
@@ -67,14 +67,14 @@
 .section-title {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--color-border-light);
 }
 
 .chore-stat {
-  background: #f8f9fa;
+  background: var(--color-bg-secondary);
   padding: 1.25rem;
   border-radius: 12px;
   margin-bottom: 1rem;
@@ -83,7 +83,7 @@
 .chore-stat-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -112,7 +112,7 @@
 .progress-level {
   font-size: 0.9rem;
   font-weight: bold;
-  color: #667eea;
+  color: var(--color-primary-light);
   background: white;
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
@@ -121,7 +121,7 @@
 .progress-bar-container {
   width: 100%;
   height: 20px;
-  background: #e0e0e0;
+  background: var(--color-border-light);
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 0.5rem;
@@ -134,29 +134,29 @@
 }
 
 .thomas-bar {
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-thomas-gradient);
 }
 
 .chantale-bar {
-  background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+  background: var(--color-chantale-gradient);
 }
 
 .progress-info {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .total-xp {
   font-weight: 600;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 /* Cumulative chart */

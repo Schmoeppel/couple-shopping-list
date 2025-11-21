@@ -10,7 +10,7 @@
 .chores-header h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -28,7 +28,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   border-radius: 10px;
   color: white;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
@@ -51,7 +51,7 @@
 }
 
 .add-chore-form {
-  background: #f8f9fa;
+  background: var(--color-bg-secondary);
   padding: 1rem;
   border-radius: 10px;
   margin-bottom: 1.5rem;
@@ -60,7 +60,7 @@
 .chore-select {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-light);
   border-radius: 10px;
   font-size: 1rem;
   margin-bottom: 0.75rem;
@@ -70,7 +70,7 @@
 
 .chore-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary-light);
 }
 
 .custom-chore-inputs {
@@ -92,7 +92,7 @@
 }
 
 .chore-item {
-  background: #f8f9fa;
+  background: var(--color-bg-secondary);
   padding: 1.25rem;
   border-radius: 10px;
   margin-bottom: 0.75rem;
@@ -116,12 +116,12 @@
 .chore-name {
   font-size: 1.1rem;
   font-weight: 500;
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 .chore-arrow {
   font-size: 1.5rem;
-  color: #999;
+  color: var(--color-text-muted);
   font-weight: 300;
 }
 
@@ -178,7 +178,7 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #999;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0.5rem;
   line-height: 1;
@@ -186,21 +186,21 @@
 }
 
 .modal-close:hover {
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 .modal-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: var(--color-text-primary);
   text-align: center;
 }
 
 .modal-points {
   text-align: center;
   font-size: 1.2rem;
-  color: #667eea;
+  color: var(--color-primary-light);
   font-weight: bold;
   margin-bottom: 2rem;
 }
@@ -214,7 +214,7 @@
 .modal-question {
   text-align: center;
   font-size: 1rem;
-  color: #666;
+  color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
 }
 
@@ -229,9 +229,9 @@
   width: 100%;
   padding: 0.75rem;
   background: none;
-  border: 2px solid #ff6b6b;
+  border: 2px solid var(--color-status-error);
   border-radius: 10px;
-  color: #ff6b6b;
+  color: var(--color-status-error);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -239,7 +239,7 @@
 }
 
 .btn-delete-modal:hover {
-  background: #ff6b6b;
+  background: var(--color-status-error);
   color: white;
 }
 
@@ -257,7 +257,7 @@
 }
 
 .btn-thomas {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-thomas-gradient);
 }
 
 .btn-thomas:hover {
@@ -266,7 +266,7 @@
 }
 
 .btn-chantale {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--color-chantale-gradient);
 }
 
 .btn-chantale:hover {
@@ -275,7 +275,7 @@
 }
 
 .btn-both {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: var(--color-both-gradient);
 }
 
 .btn-both:hover {
@@ -285,8 +285,8 @@
 
 .btn-delete-chore {
   background: none;
-  border: 2px solid #ff6b6b;
-  color: #ff6b6b;
+  border: 2px solid var(--color-status-error);
+  color: var(--color-status-error);
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   cursor: pointer;
@@ -296,20 +296,20 @@
 }
 
 .btn-delete-chore:hover {
-  background: #ff6b6b;
+  background: var(--color-status-error);
   color: white;
 }
 
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .empty-state p:first-child {

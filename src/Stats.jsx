@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { database } from './firebase';
+import colors from './colors';
 import './Stats.css';
 
 const PRESET_CHORES = [
@@ -334,17 +335,17 @@ function CumulativeChart({ days, thomas, chantale }) {
         <line x1={pad} y1={pad} x2={pad} y2={height - pad} stroke="#e0e0e0" strokeWidth="1" />
 
         {/* Chantale (pink) */}
-        <path d={cPath} fill="none" stroke="#f5576c" strokeWidth="3" strokeLinecap="round" />
+        <path d={cPath} fill="none" stroke={colors.chantale.primary} strokeWidth="3" strokeLinecap="round" />
         {/* Thomas (blue/purple) */}
-        <path d={tPath} fill="none" stroke="#667eea" strokeWidth="3" strokeLinecap="round" />
+        <path d={tPath} fill="none" stroke={colors.thomas.primary} strokeWidth="3" strokeLinecap="round" />
       </svg>
       <div className="chart-legend" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '0.5rem' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 18, height: 3, background: '#667eea', display: 'inline-block', borderRadius: 2 }} />
+          <span style={{ width: 18, height: 3, background: colors.thomas.primary, display: 'inline-block', borderRadius: 2 }} />
           Thomas
         </span>
         <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 18, height: 3, background: '#f5576c', display: 'inline-block', borderRadius: 2 }} />
+          <span style={{ width: 18, height: 3, background: colors.chantale.primary, display: 'inline-block', borderRadius: 2 }} />
           Chantale
         </span>
       </div>

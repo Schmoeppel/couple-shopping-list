@@ -10,7 +10,7 @@
 .expenses-header h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -18,7 +18,7 @@
 
 /* Balance Summary */
 .balance-summary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-gradient);
   color: white;
   padding: 1.5rem;
   border-radius: 15px;
@@ -56,7 +56,7 @@
 
 /* Add Expense Form */
 .add-expense-form {
-  background: #f8f9fa;
+  background: var(--color-bg-secondary);
   padding: 1.5rem;
   border-radius: 10px;
   margin-bottom: 1.5rem;
@@ -76,14 +76,14 @@
   display: block;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
 }
 
 .select {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-light);
   border-radius: 10px;
   font-size: 1rem;
   background: white;
@@ -93,7 +93,7 @@
 .select:focus,
 .input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary-light);
 }
 
 /* Expenses List */
@@ -102,7 +102,7 @@
 }
 
 .expense-item {
-  background: #f8f9fa;
+  background: var(--color-bg-secondary);
   padding: 1rem;
   border-radius: 10px;
   margin-bottom: 0.75rem;
@@ -127,7 +127,7 @@
 .expense-amount {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #667eea;
+  color: var(--color-primary-light);
   min-width: 80px;
 }
 
@@ -138,7 +138,7 @@
 .expense-description {
   font-size: 1rem;
   font-weight: 500;
-  color: #333;
+  color: var(--color-text-primary);
   margin-bottom: 0.25rem;
 }
 
@@ -147,7 +147,7 @@
   gap: 0.5rem;
   align-items: center;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--color-text-secondary);
   flex-wrap: wrap;
 }
 
@@ -160,11 +160,11 @@
 }
 
 .expense-badge.thomas {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-thomas-gradient);
 }
 
 .expense-badge.chantale {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--color-chantale-gradient);
 }
 
 .expense-for {
@@ -172,13 +172,13 @@
 }
 
 .expense-date {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .btn-delete {
   background: none;
   border: none;
-  color: #ff6b6b;
+  color: var(--color-status-error);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
@@ -196,13 +196,13 @@
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .empty-state p:first-child {
